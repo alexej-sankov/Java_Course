@@ -6,6 +6,10 @@ public class Token {
 	
 	public Token() {}
 
+	public Token(String token) {
+		this.token = token;
+	}
+
 	public String getToken() {
 		return token;
 	}
@@ -16,7 +20,7 @@ public class Token {
 
 	@Override
 	public String toString() {
-		return "Token [token=" + token + "]";
+		return token;
 	}
 
 }

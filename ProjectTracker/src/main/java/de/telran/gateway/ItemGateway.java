@@ -1,5 +1,6 @@
 package de.telran.gateway;
 
+import de.telran.model.Token;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -19,17 +20,13 @@ public class ItemGateway {
 		this.rest = rest;
 	}
 	
-	public boolean createItem(Item item, String token) {
+	public boolean createItem(Item item, Token token) {
 		HttpHeaders httpHeaders = new HttpHeaders();
-		httpHeaders.add("Authorization", token);
+		httpHeaders.add("Authorization", token.toString());
 
 		HttpEntity<Item> itemHttpEntity = new HttpEntity<>(item, httpHeaders);
 		ResponseEntity<Void> responseEntity = rest.exchange(itemsCreaterUrl, HttpMethod.POST, itemHttpEntity, Void.class);
-		if(responseEntity.getStatusCodeValue() == 200) {
-			return true;
-		} else {
-			return false;
-		}
+		return responseEntity.getStatusCodeValue() == 200;
 
 	}
 }

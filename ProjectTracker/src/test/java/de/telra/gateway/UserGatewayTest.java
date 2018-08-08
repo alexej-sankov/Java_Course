@@ -3,6 +3,7 @@ package de.telra.gateway;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import de.telran.model.Token;
 import org.junit.Test;
 import org.springframework.web.client.RestTemplate;
 
@@ -10,7 +11,7 @@ import de.telran.gateway.UserGateway;
 import de.telran.model.User;
 
 public class UserGatewayTest {
-
+//	RestTemplate s = mock(RestTemplate.class);
 
 	@Test
 	public void testRegisterUser() {
@@ -22,9 +23,9 @@ public class UserGatewayTest {
 	@Test
 	public void testLoginUser() {
 		UserGateway gateway = new UserGateway(new RestTemplate());
-		String token = gateway.login(createTestUser());
-		System.out.println("TOKEN "+token);
-		assertNotNull("token", token);
+		Token token = gateway.login(new User("123test1234", "12345"));
+		System.out.println("TOKEN "+token.toString());
+		assertNotNull("token", token.toString());
 	}
 	private User createTestUser() {
 		User user = new User();

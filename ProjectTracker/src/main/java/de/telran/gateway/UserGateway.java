@@ -1,5 +1,6 @@
 package de.telran.gateway;
 
+import de.telran.model.MyResponseErrorHandler;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -22,22 +23,20 @@ public class UserGateway {
 	
 	public UserGateway(RestTemplate rest) {
 		this.rest = rest;
+		this.rest.setErrorHandler(new MyResponseErrorHandler());
 		
 	}
 	
 	public boolean register(User user) {
 		ResponseEntity<Void> postForEntity = rest.postForEntity(registerUrl, user, Void.class);
-		if(postForEntity.getStatusCodeValue() == 200) {
-			return true;
-		} else {
-			return false;
-		}
+		return postForEntity.getStatusCodeValue() == 200;
+
 	}
 	
-	public String login(User user) {
+	public Token login(User user) {
 		HttpEntity<User> userHttpEntity = new HttpEntity<>(user);
 		ResponseEntity<Token> postForEntity = rest.exchange(loginUrl, HttpMethod.POST, userHttpEntity, Token.class);
-		return postForEntity.getBody().getToken();
+		return postForEntity.getBody();
 	}
 	
 	private void configureConverter() {
@@ -51,5 +50,7 @@ public class UserGateway {
 		rest.getMessageConverters().removeIf(m -> m.getClass().getName().equals(MappingJackson2HttpMessageConverter.class.getName()));
 		rest.getMessageConverters().add(messageConverter);
 	}
-
+/*
+make mock for RestTemplate
+ */
 }
