@@ -4,8 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class SearchResult {
-    String title;
-    String woeid;
+    private String title;
+    private String woeid;
 
     public SearchResult(String title, String woeid) {
         this.title = title;

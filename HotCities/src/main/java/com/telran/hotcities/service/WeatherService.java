@@ -1,9 +1,14 @@
 package com.telran.hotcities.service;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.telran.hotcities.model.SearchResult;
 import com.telran.hotcities.model.WeatherForecast;
+import exception.SomeCitiesNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,11 +24,22 @@ public class WeatherService {
         this.gateway = gateway;
     }
 
-    // has to be String [] cities | just for testing purposes
-    public HottestCity getHottestCity(String city) {
-        SearchResult searchResult = gateway.getSearchResultsByCityName(city);
-        WeatherForecast weatherForecast = gateway.getForecast(searchResult.getWoeid());
-        return new HottestCity(searchResult.getTitle(), Double.toString(weatherForecast.getConsolidatedWeather()[0].getTheTemp()));
+    public HottestCity getHottestCity(String[] cities) throws SomeCitiesNotFoundException {
+
+        List<HottestCity> hottestCity = Arrays.asList(cities).stream()
+                .map(x -> gateway.getSearchResultsByCityName(x))
+                .filter(o -> o.isPresent())
+                .map(o -> o.get())
+                .map(x -> gateway.getForecast(x.getWoeid()))
+                .map(x ->  new HottestCity(x.getTitle(), Double.toString(x.getConsolidatedWeather()[0].getTheTemp())))
+                .sorted((o1, o2) -> o2.getTemp().compareTo(o1.getTemp()))
+                .collect(Collectors.toList());
+        if(hottestCity.isEmpty()) {
+            throw new SomeCitiesNotFoundException(Arrays.toString(cities));
+        }
+
+        return hottestCity.get(0);
+
     }
 
 

@@ -17,10 +17,10 @@ public class HotCityResource {
 
     @Autowired
     WeatherService service;
-// should be String [] cities
+
     @GetMapping("{cities}")
-    public HottestCity getHottestCity(@PathVariable String city) throws Exception {
-        return service.getHottestCity(city);
+    public HottestCity getHottestCity(@PathVariable String[] cities) throws Exception {
+        return service.getHottestCity(cities);
     }
 
 }
