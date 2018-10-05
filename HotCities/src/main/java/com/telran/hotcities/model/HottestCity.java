@@ -4,11 +4,19 @@ public class HottestCity {
     private String name;
     private String temp;
 
+    public HottestCity() {
+    }
+
     public HottestCity(String name, String temp) {
-        super();
         this.name = name;
         this.temp = temp;
     }
+
+    public HottestCity(String name, double temp) {
+        this.name = name;
+        this.temp = String.valueOf(temp);
+    }
+
     public String getName() {
         return name;
     }

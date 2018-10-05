@@ -1,6 +1,4 @@
-package exception;
-
-import org.springframework.web.bind.annotation.ResponseStatus;
+package com.telran.hotcities.exception;
 
 //@ResponseStatus(org.springframework.http.HttpStatus.NOT_FOUND)
 public class SomeCitiesNotFoundException extends Exception{

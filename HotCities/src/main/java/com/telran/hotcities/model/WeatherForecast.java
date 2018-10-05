@@ -6,43 +6,44 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Arrays;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class WeatherForecast {
+@JsonIgnoreProperties(ignoreUnknown=true)
 
-    private ConsolidatedWeather [] consolidatedWeather;
+public class WeatherForecast implements Comparable<WeatherForecast> {
     private String title;
-
-    @JsonCreator
-    public WeatherForecast(
-            @JsonProperty("consolidated_weather") ConsolidatedWeather[] consolidatedWeather,
-            @JsonProperty("title") String title) {
-        this.consolidatedWeather = consolidatedWeather;
-        this.title = title;
-    }
+    private ConsolidatedWeather[] consolidatedWeather;
 
     public WeatherForecast() {}
-
-    public ConsolidatedWeather[] getConsolidatedWeather() {
-        return consolidatedWeather;
-    }
-
-    public void setConsolidatedWeather(ConsolidatedWeather[] consolidatedWeather) {
-        this.consolidatedWeather = consolidatedWeather;
-    }
 
     public String getTitle() {
         return title;
     }
-
     public void setTitle(String title) {
         this.title = title;
+    }
+    public ConsolidatedWeather[] getConsolidatedWeather() {
+        return consolidatedWeather;
+    }
+    public void setConsolidatedWeather(ConsolidatedWeather[] consolidatedWeather) {
+        this.consolidatedWeather = consolidatedWeather;
+    }
+
+    public double getTemp() {
+        return consolidatedWeather[0].getTheTemp();
     }
 
     @Override
     public String toString() {
-        return "WeatherForecast{" +
-                "consolidatedWeather=" + Arrays.toString(consolidatedWeather) +
-                ", title='" + title + '\'' +
-                '}';
+        return "WeatherForecast [title=" + title + ", consolidatedWeather=" + Arrays.toString(consolidatedWeather)
+                + "]";
+    }
+
+    @Override
+    public int compareTo(WeatherForecast o) {
+        if(getTemp() > o.getTemp()) {
+            return 1;
+        } else if (getTemp() < o.getTemp()) {
+            return -1;
+        }
+        return 0;
     }
 }

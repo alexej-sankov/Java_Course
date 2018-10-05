@@ -1,4 +1,4 @@
-package exception;
+package com.telran.hotcities.exception;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -9,11 +9,11 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 @ControllerAdvice
-
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(SomeCitiesNotFoundException.class)
-    protected ResponseEntity<Object> handleNotFound(Exception ex, WebRequest webRequest) {
-        return handleExceptionInternal(ex, ex.getMessage(), new HttpHeaders(), HttpStatus.NOT_FOUND, webRequest);
+    protected ResponseEntity<Object> handleNotFound(Exception ex, WebRequest request) {
+
+        return handleExceptionInternal(ex, ex.getMessage(), new HttpHeaders(), HttpStatus.NOT_FOUND, request);
     }
 }

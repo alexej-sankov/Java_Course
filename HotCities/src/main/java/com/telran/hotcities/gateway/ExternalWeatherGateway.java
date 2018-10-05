@@ -1,8 +1,5 @@
 package com.telran.hotcities.gateway;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import exception.SomeCitiesNotFoundException;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
